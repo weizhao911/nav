@@ -99,6 +99,10 @@ const getDefaultState = (): Partial<Schema> => ({
   name: undefined,
   url: undefined,
   logo: undefined,
+  pinned: false,
+  vpn: false,
+  recommend: false,
+  commonlyUsed: false,
   sort: 1,
 });
 
@@ -156,4 +160,5 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 </script>
+
 
