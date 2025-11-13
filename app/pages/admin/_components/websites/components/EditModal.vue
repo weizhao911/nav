@@ -48,7 +48,9 @@
         <UFormField label="Logo" name="logo" required>
           <UInput v-model="state.logo" placeholder="请输入Logo" class="w-full" size="lg" />
         </UFormField>
-
+        <UFormField name="sort" label="排序" required>
+          <UInputNumber v-model="state.sort" placeholder="请输入排序" class="w-full" size="lg" :min="1" :max="9999" />
+        </UFormField>
         <!-- 其他字段保持不变 -->
       </UForm>
     </template>
@@ -154,3 +156,4 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 </script>
+
