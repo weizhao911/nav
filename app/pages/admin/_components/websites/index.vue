@@ -292,10 +292,7 @@ const columns: TableColumn<WebsiteList>[] = [
     },
     cell: ({ row }) => h(SiteImage, { url: row.original.logo, size: 32, color: row.original.color, class: "m-auto" }),
   },
-        )
-      );
-    },
-  },
+     
   {
     accessorKey: "category_id",
     header: "所属分类",
