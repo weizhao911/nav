@@ -1,12 +1,12 @@
-import type { APIGatewayEvent, Context } from "aws-lambda"; // 如果你用的是 AWS Lambda
-import type { VercelRequest, VercelResponse } from "@vercel/node"; // 如果是 Vercel
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const url = req.query.url as string;
+export default defineEventHandler(async (event) => {
+  const query = getQuery(event);
+  const url = query.url as string;
+
   if (!url) {
-    return res.status(400).json({ error: "缺少 url 参数" });
+    return { error: "缺少 url 参数" };
   }
 
   try {
@@ -26,8 +26,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       logo = new URL(logo, url).href;
     }
 
-    return res.status(200).json({ name, logo });
+    return { name, logo };
   } catch (err) {
-    return res.status(500).json({ error: "获取站点信息失败" });
+    return { error: "获取站点信息失败" };
   }
-}
+});
