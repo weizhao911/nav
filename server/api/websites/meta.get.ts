@@ -1,6 +1,3 @@
-import { JSDOM } from "jsdom";
-import fetch from "node-fetch";
-
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const url = query.url as string;
@@ -12,16 +9,16 @@ export default defineEventHandler(async (event) => {
   try {
     const response = await fetch(url);
     const html = await response.text();
-    const dom = new JSDOM(html);
-    const doc = dom.window.document;
 
-    const name = doc.querySelector("title")?.textContent?.trim() || "";
-    let logo =
-      doc.querySelector("link[rel='icon']")?.href ||
-      doc.querySelector("link[rel='shortcut icon']")?.href ||
-      `${new URL(url).origin}/favicon.ico`;
+    // 简单提取 <title>
+    const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+    const name = titleMatch ? titleMatch[1].trim() : "";
 
-    // 处理相对路径 favicon
+    // 提取 favicon
+    const iconMatch = html.match(/<link[^>]+rel=["'](?:icon|shortcut icon)["'][^>]+href=["']([^"']+)["']/i);
+    let logo = iconMatch ? iconMatch[1] : `${new URL(url).origin}/favicon.ico`;
+
+    // 处理相对路径
     if (logo && !logo.startsWith("http")) {
       logo = new URL(logo, url).href;
     }
