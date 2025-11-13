@@ -186,7 +186,6 @@ const handleEdit = (category: WebsiteList) => {
     "name",
     "url",
     "logo",
-    "tags",
     "pinned",
     "vpn",
     "recommend",
@@ -293,26 +292,6 @@ const columns: TableColumn<WebsiteList>[] = [
     },
     cell: ({ row }) => h(SiteImage, { url: row.original.logo, size: 32, color: row.original.color, class: "m-auto" }),
   },
-  {
-    accessorKey: "tags",
-    header: "站点标签",
-    meta: {
-      class: {
-        td: "text-center",
-        th: "text-center",
-      },
-    },
-    cell: ({ row }) => {
-      const tags = row.original?.tags || [];
-      return h(
-        "div",
-        { class: "flex justify-center gap-2" },
-        tags.map((tag) =>
-          h(UBadge, {
-            color: "neutral",
-            variant: "soft",
-            label: tag,
-          })
         )
       );
     },
@@ -507,7 +486,6 @@ const columnVisibility = ref({
 const columnVisibilityMap: Record<string, string> = reactive({
   name: "站点名称",
   logo: "Logo",
-  tags: "站点标签",
   category_id: "所属分类",
   desc: "站点描述",
   url: "站点链接",
