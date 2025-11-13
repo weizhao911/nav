@@ -133,7 +133,12 @@ const { data: categoryData, status: categoryLoading } = await useFetch<Response<
 
 // 请求列表
 const { data, refresh, status } = await useFetch<Response<PageResponse<WebsiteList>>>("/api/websites", {
-  query: { current, pageSize, name, category_id },
+  query: () => ({
+    current: current.value,
+    pageSize: pageSize.value,
+    name: name.value,
+    category_id: category_id.value,
+  }),
   watch: false,
   // 处理响应数据
   onResponse: ({ response }) => {
