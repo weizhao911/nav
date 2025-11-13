@@ -2,8 +2,8 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-06-06 10:14:37
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-06-14 15:17:24
- * @Description: 新增站点列表
+ * @LastEditTime: 2025-11-13 18:20:24
+ * @Description: 新增站点列表（修复排序字段丢失问题）
  */
 import type { Response, WebsiteEdit, WebsiteList } from '~/lib/type'
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
@@ -15,10 +15,29 @@ export default defineEventHandler(async (event): Promise<Response<WebsiteList[]>
   // 得到请求体
   const body: WebsiteEdit = await readBody(event)
 
+  // 自动生成排序值（如果前端未传）
+  let finalSort = body.sort
+  if (typeof finalSort !== 'number') {
+    const { data: maxSortData, error: sortError } = await client
+      .from('ds_websites')
+      .select('sort')
+      .order('sort', { ascending: false })
+      .limit(1)
+
+    if (sortError) {
+      throw createError({
+        statusCode: RESPONSE_STATUS_CODE.FAIL,
+        statusMessage: sortError.message
+      })
+    }
+
+    finalSort = maxSortData?.[0]?.sort ? maxSortData[0].sort + 1 : 1
+  }
+
   // 插入数据
   const { data, error } = await client
     .from('ds_websites')
-    .insert({ ...body, email: user?.email })
+    .insert({ ...body, sort: finalSort, email: user?.email })
     .select()
 
   // 判断请求结果
