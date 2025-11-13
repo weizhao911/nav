@@ -81,17 +81,6 @@
           />
         </UFormField>
 
-        <UFormField name="tags" label="站点标签" required>
-          <UInputTags
-            v-model="state.tags"
-            :max-length="4"
-            placeholder="请输入站点标签"
-            size="lg"
-            icon="ri:price-tag-3-line"
-            class="w-full"
-          />
-        </UFormField>
-
         <UFormField name="sort" label="排序" required>
           <UInputNumber v-model="state.sort" placeholder="请输入排序" class="w-full" size="lg" :min="1" :max="9999" />
         </UFormField>
@@ -149,7 +138,6 @@ const schema = z.object({
       message: "必须是有效的 HEX 颜色（如 #FF0000 或 #FFF），或留空",
     })
     .optional(),
-  tags: z.string().array().nonempty("请输入站点标签"),
   pinned: z.boolean().optional(),
   vpn: z.boolean().optional(),
   recommend: z.boolean().optional(),
@@ -169,7 +157,6 @@ const getDefaultState = (): Partial<Schema> => ({
   url: undefined,
   logo: undefined,
   color: undefined,
-  tags: [],
   pinned: false,
   vpn: false,
   recommend: false,
@@ -255,3 +242,4 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 </script>
+
