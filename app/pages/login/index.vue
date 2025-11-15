@@ -38,61 +38,7 @@ const state = reactive<Partial<Schema>>({
   password: undefined,
 });
 
-// Github 登录
-const githubLogin = async () => {
-  try {
-    loading.value = true;
-    await auth
-      .signInWithOAuth({
-        provider: "github",
-        options: { redirectTo },
-      })
-      .then(() => {
-        toast.add({
-          title: "登录成功",
-          description: "正在为您跳转...",
-          color: "success",
-        });
-        loading.value = false;
-      });
-  } catch (err: any) {
-    toast.add({
-      title: "登录失败",
-      description: err.message,
-      color: "error",
-    });
-  } finally {
-    loading.value = false;
-  }
-};
 
-// 谷歌登录
-const googleLogin = async () => {
-  try {
-    loading.value = true;
-    await auth
-      .signInWithOAuth({
-        provider: "google",
-        options: { redirectTo },
-      })
-      .then(() => {
-        toast.add({
-          title: "登录成功",
-          description: "正在为您跳转...",
-          color: "success",
-        });
-        loading.value = false;
-      });
-  } catch (err: any) {
-    toast.add({
-      title: "登录失败",
-      description: err.message,
-      color: "error",
-    });
-  } finally {
-    loading.value = false;
-  }
-};
 
 const isRegister = ref(false);
 
@@ -219,29 +165,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           </UButton>
         </div>
       </UForm>
-      <USeparator label="快捷登录" class="py-4" />
-      <div class="grid grid-cols-2 gap-4">
-        <UButton
-          icon="i-simple-icons-github"
-          size="xl"
-          color="neutral"
-          variant="outline"
-          @click="githubLogin"
-          class="cursor-pointer justify-center"
-          :loading="loading"
-          >Github</UButton
-        >
-        <UButton
-          icon="i-simple-icons-google"
-          size="xl"
-          color="neutral"
-          variant="outline"
-          @click="googleLogin"
-          class="cursor-pointer justify-center"
-          :loading="loading"
-          >Google</UButton
-        >
-      </div>
+
     </div>
   </div>
 </template>

@@ -68,6 +68,7 @@
   </header>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
 const colorMode = useColorMode();
 
 // 判断是否暗色模式
