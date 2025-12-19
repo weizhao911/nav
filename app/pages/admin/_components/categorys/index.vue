@@ -176,9 +176,8 @@ const handleEdit = (category: CategoryList) => {
 const handleDelete = async (id: string) => {
   deleteId.value = id;
   try {
-    await $fetch("/api/categorys", {
+    await $fetch(`/api/categorys/${id}`, {
       method: "DELETE",
-      body: { id },
     })
       .then(({ code, msg }) => {
         if (code === RESPONSE_STATUS_CODE.SUCCESS) {
@@ -199,9 +198,9 @@ const handleDelete = async (id: string) => {
       .finally(() => {
         deleteId.value = "";
       });
-  } catch {
+  } catch (error: any) {
     toast.add({
-      title: "操作失败",
+      title: error?.message || "操作失败",
       color: "error",
       icon: "ri:close-circle-line",
     });

@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-06-13 13:39:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-06-17 17:42:48
- * @Description: 删除站点
+ * @LastEditTime: 2025-12-17 10:00:00
+ * @Description: 删除站点(带ID参数)
  */
-import type { Response, WebsiteEdit, WebsiteList } from '~/lib/type'
+import type { Response, WebsiteList } from '~/lib/type'
 import { serverSupabaseClient } from '#supabase/server'
 import { RESPONSE_STATUS_CODE } from '~/lib/enum'
 
